@@ -1,0 +1,133 @@
+<html>
+	<body>
+		<center><h1>Add and Remove element from the list</h1>
+		<div class="box"><br>
+		Enter number: <input type="number" id="inp" placeholder="number"><br><br>
+		<button type="button" onclick="add_num()">ADD</button><br><br>
+		<button type="button" onclick="remove_num()">Remove</button>
+		<ul id="list"></ul></center>
+		</div>
+		<script>
+		class Node { 
+		// constructor 
+			constructor(element) 
+			{ 
+				this.element = element; 
+				this.next = null;
+			} 
+		}
+		
+		class LinkedList { 
+			constructor() 
+			{ 
+				this.head = null; 
+				this.size = 0; 
+			}  
+			
+			add(element) 
+			{ 
+				// creates a new node 
+				var node = new Node(element); 
+			  
+				// to store current node 
+				var current; 
+			  
+				// if list is Empty add the 
+				// element and make it head 
+				if (this.head == null) 
+					this.head = node; 
+				else { 
+					current = this.head; 
+			  
+					// iterate to the end of the 
+					// list 
+					while (current.next) { 
+						current = current.next; 
+					} 
+			  
+					// add node 
+					current.next = node; 
+				} 
+				this.size++; 
+			}
+			printList() 
+			{ 
+				var curr = this.head; 
+				document.querySelector("#list").innerHTML = '';
+				while (curr) { 
+					document.querySelector("#list").innerHTML += `<li>${curr.element} </li>`
+					curr = curr.next;
+				} 
+			
+			}
+			removeElement(element) 
+			{ 
+				var current = this.head; 
+				var prev = null; 
+			  
+				// iterate over the list 
+				while (current != null) { 
+					// comparing element with current 
+					// element if found then remove the 
+					// and return true 
+					if (current.element === element) { 
+						if (prev == null) { 
+							this.head = current.next; 
+						} else { 
+							prev.next = current.next; 
+						} 
+						this.size--; 
+						return current.element; 
+					} 
+					prev = current; 
+					current = current.next; 
+				} 
+				return -1; 
+			}
+		} 
+		
+		let lis = null;
+		
+		
+		function add_num()
+		{
+			let val=document.querySelector("#inp").value;
+			if(lis==null)
+			{
+				lis = new LinkedList();
+				lis.add(val);
+			}
+			else
+			{
+				lis.add(val);
+			}
+			lis.printList();
+		}
+		
+		function remove_num() {
+			let val=document.querySelector("#inp").value;
+			if(lis !== null) {
+				lis.removeElement(val);
+			}
+			lis.printList();
+		}
+		</script>
+		<style>
+			ul {
+				list-style-type: none;
+			}
+			li {
+			 float:left;
+			 margin-left:1em;
+			 border: black solid 1px;
+			 padding: .5em;
+			}
+			.box{
+				border: 8px solid green;
+			}
+			body{
+				background-color: #FFFFE0;
+			}
+		</style>
+	</body>
+</html>
